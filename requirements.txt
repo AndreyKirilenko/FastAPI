@@ -1,0 +1,4 @@
+fastapi[all] #all значит все модули впридачу
+requests # позволит нам тестировать API через GET запросы
+aiogram==3.13.0
+fastapi-utils[all]
