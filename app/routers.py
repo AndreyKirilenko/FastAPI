@@ -23,7 +23,7 @@ root_router = APIRouter(
 
 @root_router.get("/")
 async def root() -> dict:
-    return {"message": "Hello World"}
+    return {"message": "Hello World2"}
 
 
 @root_router.post("/webhook")

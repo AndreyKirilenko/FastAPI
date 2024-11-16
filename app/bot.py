@@ -1,3 +1,10 @@
+#----------------------------------------------#
+#   Если не работает Webhook смотрим состояние  #
+#   через запрос к API телеграма, запросы в     #
+#   файле api_request.http                      #
+#                                              #
+#----------------------------------------------#
+
 import logging
 from aiogram.client.default import DefaultBotProperties
 from aiogram import Bot, Dispatcher, F
@@ -34,15 +41,15 @@ async def set_webhook(my_bot: Bot) -> None:
 
     current_webhook_info = await check_webhook()
     if settings.debug:
-        logging.debug(f"Current bot info: {current_webhook_info}")
+        logging.info(f"Current bot info: {current_webhook_info}")
     try:
         await my_bot.set_webhook(
-            f"{settings.TUNA_WEPHOOK_URL}{settings.WEPHOOK_PATH}",
+            f"{settings.TUNA_WEBHOOK_URL}{settings.WEBHOOK_PATH}",
             drop_pending_updates=current_webhook_info.pending_update_count > 0,
             max_connections=40 if settings.debug else 100,
         )
         if logging.debug:
-            logging.debug(f"Updated bot info: {await check_webhook()}")
+            logging.info(f"Updated bot info: {await check_webhook()}")
     except Exception as e:
         logging.error(f"Can't set webhook - {e}")
 
@@ -53,6 +60,7 @@ async def start_telegram():
     if settings.debug:
         logging.debug(f"First run: {fr}")
     if fr:
+        
         await set_webhook(bot)
         # await set_bot_commands_menu(bot)
 
